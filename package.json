@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "scripts": {
+    "start:prod": "node dist/index",
     "start": "ts-node src/index",
     "prebuild": "rimraf dist",
     "build": "tsc -b tsconfig.build.json",
