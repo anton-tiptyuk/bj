@@ -6,11 +6,19 @@
 // 4 suits * 6 decks = 24 of each card
 
 export class Deck {
-  private readonly remainingCards: number[];
   private possibleCards: number[];
 
-  constructor() {
-    this.remainingCards = new Array<number>(13).fill(24);
+  constructor(private readonly remainingCards: number[]) {
     this.possibleCards = this.remainingCards.map((_, idx) => idx);
+  }
+
+  static getFullDeck() {
+    return new Array<number>(13).fill(24);
+  }
+
+  pickCard(pickIdx: number) {
+    return new Deck(
+      this.remainingCards.map((val, idx) => (pickIdx === idx ? val - 1 : val))
+    );
   }
 }
