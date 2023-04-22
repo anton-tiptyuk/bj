@@ -1,1 +1,3 @@
-console.log('duplo');
+import { iterate } from './loop';
+
+iterate();

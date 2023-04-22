@@ -1,24 +1,33 @@
-// cards:
-// 2..10 (9x 0..8)
-// J Q K A -> (4x) 9 10 11 12
-// totals 13x
-
 // 4 suits * 6 decks = 24 of each card
 
 export class Deck {
-  private possibleCards: number[];
-
-  constructor(private readonly remainingCards: number[]) {
-    this.possibleCards = this.remainingCards.map((_, idx) => idx);
-  }
+  constructor(
+    private readonly remainingCards: number[],
+    private readonly qty: number
+  ) {}
 
   static getFullDeck() {
-    return new Array<number>(13).fill(24);
+    const deckArray = new Array<number>(13).fill(24);
+    return new Deck(deckArray, 24 * 13);
   }
 
-  pickCard(pickIdx: number) {
+  private pickCard(pickIdx: number) {
     return new Deck(
-      this.remainingCards.map((val, idx) => (pickIdx === idx ? val - 1 : val))
+      this.remainingCards.map((val, idx) => (pickIdx === idx ? val - 1 : val)),
+      this.qty - 1
     );
+  }
+
+  getPicks() {
+    return {
+      qty: this.qty,
+      picks: this.remainingCards
+        .map((val, idx) => ({
+          val,
+          idx,
+          deck: val && this.pickCard(idx),
+        }))
+        .filter((x) => x.val),
+    };
   }
 }
